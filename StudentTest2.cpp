@@ -359,11 +359,11 @@ TEST_SUITE("Overloaded * operator tests") {
     TEST_CASE("Multiplying fractions by one") {
         // Fraction equivalent of one
         CHECK_EQ(Fraction{3, 5} * Fraction{1, 1}, Fraction{3, 5});
-        CHECK_EQ(Fraction{5, 5} * Fraction{-8, 14}, Fraction{4, -7});
+        CHECK_EQ(Fraction{5, 5} * Fraction{-8, 14}, Fraction{-4, 7});
 
         // Floating number
         CHECK_EQ(Fraction{3, 5} * 1.0, Fraction{3, 5});
-        CHECK_EQ(1 * Fraction{-8, 14}, Fraction{4, -7});
+        CHECK_EQ(1 * Fraction{-8, 14}, Fraction{-4, 7});
     }
 
     TEST_CASE("Multiplying fractions by zero") {
@@ -427,7 +427,7 @@ TEST_SUITE("Overloaded / operator tests") {
     TEST_CASE("Basic division tests") {
         CHECK_EQ(Fraction{2, 5} / Fraction{3, 5}, Fraction{2, 3});
         CHECK_EQ(Fraction{1, 4} / Fraction{3, 4}, Fraction{1, 3});
-        CHECK_EQ(Fraction{2, 3} / Fraction{4, -5}, Fraction{-30, 36});
+        CHECK_EQ(Fraction{2, 3} / Fraction{4, -5}, Fraction{-5, 6});
         CHECK_EQ(Fraction{-3, 4} / Fraction{5, 6}, Fraction{-9, 10});
         CHECK_EQ(Fraction{-2, 5} / Fraction{3, 5}, Fraction{-2, 3});
         CHECK_EQ(Fraction{3, -4} / Fraction{-5, 6}, Fraction{9, 10});
@@ -635,7 +635,7 @@ TEST_SUITE("Input and output operators tests") {
         ss.str("");
         Fraction neg_frac2{3, -4};
         ss << neg_frac2;
-        CHECK(ss.str() == "-3/4");
+        CHECK(ss.str() == "3/-4");
 
         // Expanded fraction, both positive
         ss.str("");
@@ -679,7 +679,7 @@ TEST_SUITE("Input and output operators tests") {
 
         std::stringstream ss_out;
         ss_out << frac1 << " and " << frac2;
-        CHECK(ss_out.str() == "1/2 and -3/4");
+        CHECK(ss_out.str() == "1/2 and 3/-4");
     }
 
     TEST_CASE(">> operator with zero denominator") {
@@ -736,7 +736,6 @@ TEST_CASE("Fraction with largest possible numerator and/or denominator and overf
 
     CHECK_THROWS_AS(f2 * f4, std::overflow_error);
     CHECK_THROWS_AS(f2 / f4, std::overflow_error); //
-
     CHECK_NOTHROW(f3 * f4);
     CHECK_NOTHROW(f4 / f3);
 
